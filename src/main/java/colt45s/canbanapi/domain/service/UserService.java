@@ -1,0 +1,28 @@
+package colt45s.canbanapi.domain.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import colt45s.canbanapi.domain.User;
+import colt45s.canbanapi.domain.repository.UserRepository;
+
+/**
+ * UserService
+ */
+@Service
+public class UserService {
+
+  private final UserRepository userRepository;
+
+  @Autowired
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public List<User> findAll() {
+    return this.userRepository.findAll();
+  }
+
+}

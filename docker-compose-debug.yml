@@ -1,0 +1,30 @@
+version: "3"
+services:
+    db:
+        container_name: canban_db
+        image: mysql:latest
+        ports: 
+            - "3306:3306"
+        expose: 
+            - 3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: canban
+            MYSQL_USER: canbanUser
+            MYSQL_PASSWORD: canban
+        volumes: 
+          - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+          - ./docker/mysql/conf.d:/etc/mysql/conf.d
+          - ./logs/mysql:/var/log/mysql
+    api:
+        container_name: canban_api
+        build: 
+            context: .
+            dockerfile: Dockerfile_debug
+        depends_on:
+            - db
+        ports:
+            - "8080:8080"
+        command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 -jar -Dspring.profiles.active=docker ./build/libs/canban-api-0.0.1-SNAPSHOT.jar
+        volumes:
+            - .:/app
