@@ -2,18 +2,20 @@
 
 Spring Boot + MySQL + Docker Example
 
-## Run
+## Production
 
 ```
 ./gradlew build -x test
 docker-compose up --build
 ```
 
-## Debug
+## Development
 
-If use VSCode [see](https://code.visualstudio.com/docs/remote/containers).
+Remote debugging port `5005`
 
-## TODO
+Hot Swapping support
 
-- [ ] Hot Reload
 
+```
+docker-compose -f docker-compose-dev.yml up --build
+```
